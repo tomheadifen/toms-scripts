@@ -25,11 +25,20 @@ set_shortcuts() {
 
   # Terminal
   gsettings set $CUSTOM:$TERM name "Terminal"
-  gsettings set $CUSTOM:$TERM command "bash -c \"wmctrl -x -a gnome-terminal.Gnome-terminal || gnome-terminal\""
+  gsettings set $CUSTOM:$TERM command "bash -c \"if wmctrl -lx | grep -iq gnome-terminal; then wmctrl -lx | grep -i gnome-terminal | awk '{print \\\$1}' | head -n 1 | xargs wmctrl -ia; else gnome-terminal; fi\""
   gsettings set $CUSTOM:$TERM binding "['F3']"
 
   echo "✅ Shortcuts set"
-  cinnamon --replace &
+  OLD_PID=$(pgrep -x cinnamon | head -1)
+  cinnamon --replace > /dev/null 2>&1 &
+  spinner=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
+  i=0
+  while kill -0 "$OLD_PID" 2>/dev/null; do
+    printf "\r${spinner[$i]} Restarting Cinnamon..."
+    i=$(( (i+1) % ${#spinner[@]} ))
+    sleep 0.1
+  done
+  printf "\r✅ Cinnamon restarted     \n"
 }
 
 clear_shortcuts() {
