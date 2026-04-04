@@ -8,10 +8,11 @@ BASE="/org/cinnamon/desktop/keybindings/custom-keybindings"
 NVIM="$BASE/custom0/"
 CHROME="$BASE/custom1/"
 TERM="$BASE/custom2/"
+CLAUDE="$BASE/custom3/"
 
 set_shortcuts() {
   # IMPORTANT: set list FIRST and correctly formatted
-  gsettings set $SCHEMA custom-list "['custom0', 'custom1', 'custom2']"
+  gsettings set $SCHEMA custom-list "['custom0', 'custom1', 'custom2', 'custom3']"
 
   # NVIM
   gsettings set $CUSTOM:$NVIM name "Focus NVIM"
@@ -25,8 +26,13 @@ set_shortcuts() {
 
   # Terminal
   gsettings set $CUSTOM:$TERM name "Terminal"
-  gsettings set $CUSTOM:$TERM command "bash -c \"if wmctrl -lx | grep -iq gnome-terminal; then wmctrl -lx | grep -i gnome-terminal | awk '{print \\\$1}' | head -n 1 | xargs wmctrl -ia; else gnome-terminal; fi\""
+  gsettings set $CUSTOM:$TERM command "bash -c \"if wmctrl -lx | grep -i gnome-terminal | grep -iqv claude; then wmctrl -lx | grep -i gnome-terminal | grep -iv claude | awk '{print \\\$1}' | head -n 1 | xargs wmctrl -ia; else gnome-terminal; fi\""
   gsettings set $CUSTOM:$TERM binding "['F3']"
+
+  # Claude Code
+  gsettings set $CUSTOM:$CLAUDE name "Focus Claude Code"
+  gsettings set $CUSTOM:$CLAUDE command "bash -c \"if wmctrl -lx | grep -iq claude; then wmctrl -lx | grep -i claude | awk '{print \\\$1}' | head -n 1 | xargs wmctrl -ia; else notify-send 'Claude Code' 'No running Claude Code instance found'; fi\""
+  gsettings set $CUSTOM:$CLAUDE binding "['F4']"
 
   echo "✅ Shortcuts set"
   OLD_PID=$(pgrep -x cinnamon | head -1)

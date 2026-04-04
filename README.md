@@ -10,7 +10,8 @@ Registers custom global keyboard shortcuts in Linux Mint (Cinnamon) and restarts
 |-----|--------|
 | F1  | Focus the running Neovim terminal window. Shows a notification if no Neovim instance is open. |
 | F2  | Focus the Chrome window, or launch Chrome if it isn't running. |
-| F3  | Focus the terminal window, or launch a new terminal if none is open. |
+| F3  | Focus a terminal window (excluding Claude Code terminals), or launch a new terminal if none is open. |
+| F4  | Focus the running Claude Code terminal window. Shows a notification if no Claude Code instance is open. |
 
 ### Usage
 
@@ -28,3 +29,22 @@ Cinnamon will restart automatically after setting shortcuts (screen may flicker 
 
 - `wmctrl` — used to find and focus windows
 - `notify-send` — used to display notifications
+
+## shell-functions.sh
+
+Wrapper functions for `nvim` and `claude` that launch each in a dedicated `gnome-terminal` window with a specific WM class. This allows `set-shortcuts` to reliably identify and focus those windows.
+
+| Function | WM Class | Effect |
+|----------|----------|--------|
+| `nvim`   | `NvimTerminal` | Opens Neovim in a new terminal window |
+| `claude` | `ClaudeTerminal` | Opens Claude Code in a new terminal window |
+
+### Usage
+
+Source the file in your shell config (e.g. `~/.bashrc` or `~/.zshrc`):
+
+```bash
+source /path/to/shell-functions.sh
+```
+
+Then use `nvim` and `claude` as normal — they will open in their own dedicated windows that F1/F4 can focus.
