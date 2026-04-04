@@ -1,0 +1,44 @@
+#!/bin/bash
+
+SCHEMA="org.cinnamon.desktop.keybindings"
+CUSTOM="org.cinnamon.desktop.keybindings.custom-keybinding"
+
+BASE="/org/cinnamon/desktop/keybindings/custom-keybindings"
+
+NVIM="$BASE/custom0/"
+CHROME="$BASE/custom1/"
+TERM="$BASE/custom2/"
+
+set_shortcuts() {
+  # IMPORTANT: set list FIRST and correctly formatted
+  gsettings set $SCHEMA custom-list "['custom0', 'custom1', 'custom2']"
+
+  # NVIM
+  gsettings set $CUSTOM:$NVIM name "Focus NVIM"
+  gsettings set $CUSTOM:$NVIM command "bash -c \"if wmctrl -lx | grep -iq nvim; then wmctrl -lx | grep -i nvim | awk '{print \\\$1}' | head -n 1 | xargs wmctrl -ia; else notify-send 'Neovim' 'No running NVIM instance found'; fi\""
+  gsettings set $CUSTOM:$NVIM binding "['F1']"
+
+  # Chrome
+  gsettings set $CUSTOM:$CHROME name "Chrome"
+  gsettings set $CUSTOM:$CHROME command "bash -c \"wmctrl -x -a google-chrome.Google-chrome || google-chrome\""
+  gsettings set $CUSTOM:$CHROME binding "['F2']"
+
+  # Terminal
+  gsettings set $CUSTOM:$TERM name "Terminal"
+  gsettings set $CUSTOM:$TERM command "bash -c \"wmctrl -x -a gnome-terminal.Gnome-terminal || gnome-terminal\""
+  gsettings set $CUSTOM:$TERM binding "['F3']"
+
+  echo "✅ Shortcuts set"
+  cinnamon --replace &
+}
+
+clear_shortcuts() {
+  gsettings set $SCHEMA custom-list "[]"
+  echo "✅ Shortcuts cleared"
+}
+
+if [[ "$1" == "--clear" ]]; then
+  clear_shortcuts
+else
+  set_shortcuts
+fi
