@@ -30,6 +30,18 @@ Cinnamon will restart automatically after setting shortcuts (screen may flicker 
 - `wmctrl` — used to find and focus windows
 - `notify-send` — used to display notifications
 
+## nvim-config
+
+Neovim configuration, intended to be symlinked into `~/.config/nvim/`.
+
+### Usage
+
+```bash
+./nvim-config/setup-symlinks.sh
+```
+
+This creates `~/.config/nvim/init.lua` as a symlink pointing to `nvim-config/init.lua` in this repo.
+
 ## shell-functions.sh
 
 Wrapper functions for `nvim` and `claude` that launch each in a dedicated `gnome-terminal` window with a specific WM class. This allows `set-shortcuts` to reliably identify and focus those windows.
