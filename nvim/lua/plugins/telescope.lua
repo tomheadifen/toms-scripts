@@ -17,5 +17,7 @@ return {
         vim.keymap.set('n', '<leader>fh', builtin.help_tags,   { desc = 'Help tags' })
         -- Browse recently opened files
         vim.keymap.set('n', '<leader>fr', builtin.oldfiles,    { desc = 'Recent files' })
+        -- Search all keymaps
+        vim.keymap.set('n', '<leader>fk', builtin.keymaps,     { desc = 'Keymaps' })
     end
 }
