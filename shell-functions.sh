@@ -1,7 +1,11 @@
 #!/bin/bash
 
 nvim() {
-  gnome-terminal --class=NvimTerminal -- nvim "$@" & disown
+  if [[ "$1" == -* ]]; then
+    command nvim "$@"
+  else
+    gnome-terminal --class=NvimTerminal -- nvim "$@" & disown
+  fi
 }
 
 claude() {
