@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 
 NVIM_CONFIG_REPO="https://github.com/tomheadifen/nvim-config"
 
