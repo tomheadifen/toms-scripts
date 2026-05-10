@@ -4,7 +4,7 @@ nvim() {
   if [[ "$1" == -* ]]; then
     command nvim "$@"
   else
-    gnome-terminal --class=NvimTerminal -- nvim "$@" & disown
+    gnome-terminal --disable-factory --class=NvimTerminal -- nvim "$@" & disown
   fi
 }
 
