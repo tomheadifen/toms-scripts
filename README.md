@@ -60,3 +60,20 @@ source /path/to/shell-functions.sh
 ```
 
 Then use `nvim` and `claude` as normal — they will open in their own dedicated windows that F1/F4 can focus.
+
+## claude
+
+Global Claude Code config (settings and rules), symlinked into `~/.claude/` so it stays in sync across machines.
+
+| File | Purpose |
+|------|---------|
+| `claude/settings.json` | Global settings: hooks, plugins, permission deny rules |
+| `claude/rules/` | Global rules loaded in every project (commit messages, safety) |
+
+### Usage
+
+```bash
+./setup-claude.sh
+```
+
+Any existing `~/.claude/settings.json` or `~/.claude/rules` is moved to a `.bak` first. Because they're symlinks, edits made from either location (including by Claude Code itself) land in this repo — commit and push them as normal.
