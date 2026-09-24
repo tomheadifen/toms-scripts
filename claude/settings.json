@@ -14,6 +14,10 @@
   "enabledPlugins": {
     "php-lsp@claude-plugins-official": true
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "tui": "fullscreen",
   "theme": "dark",
   "permissions": {
